@@ -1,41 +1,47 @@
 ﻿using System.Reflection;
 
 namespace RechnerVerwaltung.Klassen {
-    internal static class ITVerwaltung {
+    internal class ITVerwaltung {
 
         static List<Rechner> rechnerListe = new() {
-        //new Rechner("R-Win10-1","192.168.1.1"),
-        //new Rechner("R-Win10-2","192.168.1.100"),
+        // 2
+        new Rechner("R-Win10-1","192.168.1.1"),
+        new Rechner("R-Win10-2","192.168.1.100"),
 
-        //new Workstation("W-Win11-1","192.168.1.101",4.5m,8m,2048m),
-        //new Workstation("W-Win11-2","192.168.1.102",4.0m,16m,1024m),
+        // 5
+        new Workstation("W-Win11-1","192.168.1.101",4.5m,8m,2048m),
+        new Workstation("W-Win11-2","192.168.1.102",4.0m,16m,1024m),
 
-        //new GrafikWorkstation("32°","WinForce HTX 256","T-Win11-1","192.168.2.1",3.4m,8m,2048m),
-        //new GrafikWorkstation("24°","WinForce HI HTX 1024","T-Win11-2","192.168.2.2",4.5m,16m,4096),
+        // 7
+        new GrafikWorkstation("32°","WinForce HTX 256","T-Win11-1","192.168.2.1",3.4m,8m,2048m),
+        new GrafikWorkstation("24°","WinForce HI HTX 1024","T-Win11-2","192.168.2.2",4.5m,16m,4096),
 
-        //new Server("S-Linux-1","192.168.10.100",8,3.4m,16m,2,6152m,"EMail-Server",3652),
-        //new Server("S-Linux-2","192.168.10.101",4,3.4m,16m,2,4192m,"Web-Server",3653),
+        // 9
+        new Server("S-Linux-1","192.168.10.100",8,3.4m,16m,2,6152m,"EMail-Server",3652),
+        new Server("S-Linux-2","192.168.10.101",4,3.4m,16m,2,4192m,"Web-Server",3653),
 
-        //new Terminal("T-Linux-1","192.168.5.100",
-        //                new("S-Linux-1","192.168.10.100",8,3.4m,16m,2,6152m,"EMail-Server",3652),
-        //                "Düsseldorf"),
-        //new Terminal("T-Linux-2","192.168.5.101",
-        //                new("S-Linux-2","192.168.10.101",4,3.4m,16m,2,4192m,"Web-Server",3653),
-        //                "Hamburg")
+        // 4
+        new Terminal("T-Linux-1","192.168.5.100",
+                        new("S-Linux-1","192.168.10.100",8,3.4m,16m,2,6152m,"EMail-Server",3652),
+                        "Düsseldorf"),
+        new Terminal("T-Linux-2","192.168.5.101",
+                        new("S-Linux-2","192.168.10.101",4,3.4m,16m,2,4192m,"Web-Server",3653),
+                        "Hamburg")
     };
 
         // Zähler erstellen
 
         // Methode erstellen welche alle in der Liste vorhanden Rechner ausgibt.
-        public static void Verwaltung() {
+        public static void AlleAnzeigen() {
             foreach( Rechner rechner in rechnerListe ) {
-                rechner.ToString();
+                Console.WriteLine( "Alle Rechner:\n" );
+                Console.WriteLine( rechner );
             }
         }
 
-        public static void VerwaltungIndex( int index ) {
-            Console.WriteLine( rechnerListe.Count() );
-            rechnerListe[ index ].ToString();
+        public static void RechnerIndex( int index ) {
+            //Console.WriteLine( rechnerListe.Count() );
+            Console.WriteLine( rechnerListe[ index - 1 ] );
         }
 
         public static int Eingabe() {
@@ -86,15 +92,31 @@ namespace RechnerVerwaltung.Klassen {
             foreach( var prop in propInfos ) {
                 Console.Write( $"{prop.Name}: " );
                 string eingabe = Console.ReadLine();
-                
+
                 eingaben.Add( eingabe );
             }
 
-            for( int i = 0; i < propInfos.Length; i++ ) {
-                Console.Write( eingaben[ i ] );
+            switch( eingaben.Count ) {
+                case 2:
+                rechnerListe.Add( new Rechner( eingaben[ 0 ], eingaben[ 1 ] ) );
+                break;
+                case 4:
+                    // TODO: Abfrage welcher Server muss noch erstellt werden. Aktuell ist es immer der gleiche Server!
+                Server server = (Server)rechnerListe[7];
+                rechnerListe.Add( new Terminal( eingaben[ 0 ], eingaben[ 1 ], server, eingaben[ 3 ] ) );
+                break;
+                case 5:
+                rechnerListe.Add( new Workstation( eingaben[0], eingaben[ 1 ], Convert.ToDecimal( eingaben[ 2 ] ), Convert.ToDecimal( eingaben[ 3 ] ), Convert.ToDecimal( eingaben[ 4 ] ) ) );
+                break;
+                case 7:
+                break;
+                case 9:
+                break;
             }
 
-
+            //for( int i = 0; i < propInfos.Length; i++ ) {
+            //    Console.Write( rechnerListe[ i ] + " \n" );
+            //}
 
             //Console.WriteLine( "\n" + rechnerListe[ 0 ] );
             //DisplayPropertyInfo( propInfos );
