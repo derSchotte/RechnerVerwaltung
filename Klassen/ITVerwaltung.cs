@@ -101,16 +101,22 @@ namespace RechnerVerwaltung.Klassen {
                 rechnerListe.Add( new Rechner( eingaben[ 0 ], eingaben[ 1 ] ) );
                 break;
                 case 4:
-                    // TODO: Abfrage welcher Server muss noch erstellt werden. Aktuell ist es immer der gleiche Server!
+                // TODO: Abfrage welcher Server muss noch erstellt werden. Aktuell ist es immer der gleiche Server!
                 Server server = (Server)rechnerListe[7];
                 rechnerListe.Add( new Terminal( eingaben[ 0 ], eingaben[ 1 ], server, eingaben[ 3 ] ) );
                 break;
                 case 5:
-                rechnerListe.Add( new Workstation( eingaben[0], eingaben[ 1 ], Convert.ToDecimal( eingaben[ 2 ] ), Convert.ToDecimal( eingaben[ 3 ] ), Convert.ToDecimal( eingaben[ 4 ] ) ) );
+                rechnerListe.Add( new Workstation( eingaben[ 0 ], eingaben[ 1 ], Convert.ToDecimal( eingaben[ 2 ] ),
+                    Convert.ToDecimal( eingaben[ 3 ] ), Convert.ToDecimal( eingaben[ 4 ] ) ) );
                 break;
                 case 7:
+                rechnerListe.Add( new GrafikWorkstation( eingaben[ 0 ], eingaben[ 1 ], eingaben[ 2 ], eingaben[ 3 ],
+                    Convert.ToDecimal( eingaben[ 4 ] ), Convert.ToDecimal( eingaben[ 5 ] ), Convert.ToDecimal( eingaben[ 6 ] ) ) );
                 break;
                 case 9:
+                rechnerListe.Add( new Server( eingaben[ 0 ], eingaben[ 1 ], Convert.ToInt32( eingaben[ 2 ] ), Convert.ToInt32( eingaben[ 3 ] ),
+                    Convert.ToInt32( eingaben[ 4 ] ), Convert.ToInt32( eingaben[ 5 ] ), Convert.ToInt32( eingaben[ 6 ] ),
+                    eingaben[ 7 ], Convert.ToInt32( eingaben[ 8 ] )) );
                 break;
             }
 
