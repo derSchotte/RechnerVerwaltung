@@ -32,7 +32,7 @@ namespace RechnerVerwaltung {
                 ITVerwaltung.AlleAnzeigen();
                 break;
                 case 2:
-                Console.WriteLine("Welchen Index wollen sie Abfragen");
+                Console.WriteLine( "Welchen Index wollen sie Abfragen" );
                 Console.Write( "Eingabe: " );
                 do {
                     check = int.TryParse( Console.ReadLine(), out eingabe );
@@ -42,11 +42,31 @@ namespace RechnerVerwaltung {
                         Console.Write( "Eingabe: " );
                     }
                 } while( !check );
-                ITVerwaltung.RechnerIndex(eingabe);
+                ITVerwaltung.RechnerIndex( eingabe );
                 break;
                 case 3:
+                Console.WriteLine( "Welche Art von Rechner darf ich anlegen?" );
+                Console.WriteLine( "[1]Rechner, [2]Workstation, [3]Grafik Workstation, [4]Server, [5]Terminal" );
+                do {
+                    check = int.TryParse( Console.ReadLine(), out eingabe );
+
+                    if( !check ) {
+                        Console.WriteLine( "Ihre Eingabe habe ich nicht verstanden, bitte nur Zahlen eingeben!" );
+                        Console.Write( "Eingabe: " );
+                    }
+                } while( !check );
+                ITVerwaltung.RechnerAnlegen( eingabe );
                 break;
                 case 4:
+                do {
+                    check = int.TryParse( Console.ReadLine(), out eingabe );
+
+                    if( !check ) {
+                        Console.WriteLine( "Ihre Eingabe habe ich nicht verstanden, bitte nur Zahlen eingeben!" );
+                        Console.Write( "Eingabe: " );
+                    }
+                } while( !check );
+                ITVerwaltung.RechnerAusListeNehmen( eingabe );
                 break;
                 case 5:
                 break;

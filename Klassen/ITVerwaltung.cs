@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RechnerVerwaltung.Klassen {
     internal class ITVerwaltung {
@@ -30,18 +33,42 @@ namespace RechnerVerwaltung.Klassen {
     };
 
         // Zähler erstellen
-
+        static int counter = 1;
         // Methode erstellen welche alle in der Liste vorhanden Rechner ausgibt.
         public static void AlleAnzeigen() {
+            Console.WriteLine( "Alle Rechner:\n" );
+
+
             foreach( Rechner rechner in rechnerListe ) {
-                Console.WriteLine( "Alle Rechner:\n" );
-                Console.WriteLine( rechner );
+                Console.WriteLine( $"[{counter++}]: {rechner.Name}" );
             }
         }
 
         public static void RechnerIndex( int index ) {
             //Console.WriteLine( rechnerListe.Count() );
             Console.WriteLine( rechnerListe[ index - 1 ] );
+        }
+
+        public static void RechnerAusListeNehmen( int index ) {
+            Console.WriteLine( "Alle Rechner:\n" );
+
+            foreach( Rechner rechner in rechnerListe ) {
+                Console.WriteLine( $"[{counter++}]: {rechner.Name}" );
+            }
+
+            Console.WriteLine( "Welchen Eintrag darf ich entfernen?" );
+            int eingabe;
+            bool check;
+
+            do {
+                Console.Write( "Eingabe: " );
+                check = int.TryParse( Console.ReadLine(), out eingabe );
+
+                if( !check ) {
+                    Console.WriteLine( "Sie haben keine Zahl eingegeben!" );
+                }
+            } while( !check );
+            rechnerListe.RemoveAt( eingabe - 1 );
         }
 
         public static int Eingabe() {
@@ -83,9 +110,70 @@ namespace RechnerVerwaltung.Klassen {
             }
         }
 
+        //public static void AnlegenInListe( Type type ) {
+        //    PropertyInfo[] propInfo = type.GetProperties(System.Reflection.BindingFlags.Public | BindingFlags.Instance);
+
+        //    Console.WriteLine( type.Name.ToString() );
+
+        //    switch( type.Name.ToString() ) {
+        //        case "Rechner":
+        //        Rechner temp = new("","");
+
+        //        foreach( var prop in propInfo ) {
+        //            Console.Write( $"{prop.Name}: " );
+        //            prop.SetValue( temp, Console.ReadLine() );
+        //        }
+
+        //        rechnerListe.Add( temp );
+        //        break;
+        //        case "Workstation":
+        //        Workstation temp1 = new("","",Convert.ToDecimal(""),Convert.ToDecimal(""),Convert.ToDecimal(""));
+
+        //        foreach( var prop in propInfo ) {
+        //            Console.Write( $"{prop.Name}: " );
+        //            prop.SetValue( temp1, Console.ReadLine() );
+        //        }
+
+        //        rechnerListe.Add( temp1 );
+        //        break;
+        //        case "GrafikWorkstation":
+        //        GrafikWorkstation temp2 = new("","","","",Convert.ToDecimal(""),Convert.ToDecimal(""),Convert.ToDecimal(""));
+
+        //        foreach( var prop in propInfo ) {
+        //            Console.Write( $"{prop.Name}: " );
+        //            prop.SetValue( temp2, Console.ReadLine() );
+        //        }
+
+        //        rechnerListe.Add( temp2 );
+        //        break;
+        //        case "Server":
+        //        Server temp3 = new("","",Convert.ToInt32(""),Convert.ToDecimal(""),Convert.ToDecimal(""),Convert.ToInt32(""),Convert.ToDecimal(""),"",Convert.ToDecimal(""));
+
+        //        foreach( var prop in propInfo ) {
+        //            Console.Write( $"{prop.Name}: " );
+        //            prop.SetValue( temp3, Console.ReadLine() );
+        //        }
+
+        //        rechnerListe.Add( temp3 );
+        //        break;
+        //        case "Terminal":
+        //        Server server = (Server)rechnerListe[7];
+        //        Terminal temp4 = new("","",server,"");
+
+        //        foreach( var prop in propInfo ) {
+        //            Console.Write( $"{prop.Name}: " );
+        //            if( prop.Name != "anbindung" ) {
+        //                prop.SetValue( temp4, Console.ReadLine() );
+        //            }
+        //        }
+
+        //        rechnerListe.Add( temp4 );
+        //        break;
+        //    }
+        //}
+
         static void AnlegenInListe( Type type ) {
-            Type t = type;
-            PropertyInfo[] propInfos = t.GetProperties( System.Reflection.BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] propInfos = type.GetProperties( System.Reflection.BindingFlags.Public | BindingFlags.Instance);
 
             List<string> eingaben = new();
 
@@ -116,7 +204,7 @@ namespace RechnerVerwaltung.Klassen {
                 case 9:
                 rechnerListe.Add( new Server( eingaben[ 0 ], eingaben[ 1 ], Convert.ToInt32( eingaben[ 2 ] ), Convert.ToInt32( eingaben[ 3 ] ),
                     Convert.ToInt32( eingaben[ 4 ] ), Convert.ToInt32( eingaben[ 5 ] ), Convert.ToInt32( eingaben[ 6 ] ),
-                    eingaben[ 7 ], Convert.ToInt32( eingaben[ 8 ] )) );
+                    eingaben[ 7 ], Convert.ToInt32( eingaben[ 8 ] ) ) );
                 break;
             }
 
